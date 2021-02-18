@@ -20,6 +20,7 @@ The app uses a number of open source projects to work properly:
 - [Thymeleaf] - template engine
 - [Flying Saucer] - pdf generator
 - [JavaScript]
+- [MySQL]
 
 Verify the deployment by navigating to your server address in
 your preferred browser.

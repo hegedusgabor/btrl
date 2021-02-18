@@ -19,7 +19,6 @@ The app uses a number of open source projects to work properly:
 - [Swagger] - api doc generator
 - [Thymeleaf] - template engine
 - [Flying Saucer] - pdf generator
-- [jQuery]
 - [JavaScript]
 
 Verify the deployment by navigating to your server address in

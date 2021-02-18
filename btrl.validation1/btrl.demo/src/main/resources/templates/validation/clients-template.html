@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+	<div th:if="${enrolmentValid}">
+		<p style="text-align: center;">
+			<strong>ENROLMENT CONTRACT</strong> for enrolment beginning with : <span
+				th:with="now=${#dates.createNow()}"> <a
+				th:text="${#dates.format(now, 'dd.MM.yyyy')}"></a>
+			</span>
+		</p>
+	</div>
+	<div th:unless="${enrolmentValid}">
+		<p style="text-align: center;">
+			<strong>DENIAL</strong> Document
+		</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+		<p style="text-align: left;">
+			Reason for the enrollment was denied:
+			<ul>
+				<li th:if="!${valid.validDate}">&nbsp;Identity document expired</li>
+				<li th:if="${valid.validExternal}">&nbsp;The client already exists in our system</li>
+				<li th:if="${valid.validationMessage} > 99">&nbsp;Risky candidate, enrollment not acceptable</li>
+				<li th:if="${valid.validationMessage} == -1">&nbsp;No reputation info found on external system</li>
+			</ul>
+		</p>
+	</div>
+	<p style="text-align: center;">&nbsp;</p>
+	<h3 style="text-align: left; padding-left: 40px;">CLIENT
+		INFORMATION</h3>
+	<ul>
+		<li style="list-style-type: none;">
+			<table style="border-collapse: collapse; width: 100%;" border="1">
+				<tbody>
+					<tr>
+						<td style="width: 50%;">Last Name</td>
+						<td th:text="${theClient.firstName}" style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">First Name</td>
+						<td th:text="${theClient.lastName}" style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Nationality</td>
+						<td th:text="${theClient.nationality}" style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Gender</td>
+						<td th:text="${theClient.gender}" style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Place of birth</td>
+						<td th:text="${theClient.placeofbirth}" style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Address</td>
+						<td th:text="${theClient.address}" style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">CNP</td>
+						<td th:text="${theClient.cnp}" style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">SERIAL/NR</td>
+						<td th:text="${theClient.serial} + '/' + ${theClient.nr}"
+							style="width: 50%;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Validity</td>
+						<td
+							th:text="${#dates.format(theClient.validFrom, 'dd.MM.yyyy')} + '-' + ${#dates.format(theClient.validTo, 'dd.MM.yyyy')}"
+							style="width: 50%;">&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+		</li>
+	</ul>
+	<p style="padding-left: 40px;">&nbsp;</p>
+
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<table
+		style="height: 69px; width: 100.712%; border-collapse: collapse;"
+		border="0">
+		<tbody>
+			<tr>
+				<td style="width: 70%;">FrontDesk Employee Signature</td>
+				<td style="width: 30%;">Client Signature</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
+

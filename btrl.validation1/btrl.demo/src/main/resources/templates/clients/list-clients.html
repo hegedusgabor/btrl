@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<title>Clients Directory</title>
+
+</head>
+
+<body>
+
+	<div class="container-fluid">
+
+		<h3>Clients Directory</h3>
+		<hr>
+			
+		<!-- Add a button -->
+		<a th:href="@{/clients/showFormForAdd}"
+			class="btn btn-primary btn-sm mb-3"> Add Client </a>
+		
+		<!-- Place for messages: error, alert etc ... -->
+			<div class="form-group">
+				<div class="col-xs-15">
+					<div th:if="${uploadError != null}">
+						<!-- Check for upload error -->
+						<div th:utext="${uploadError}" class="alert alert-danger col-xs-offset-1 col-xs-10"></div>
+					</div>
+				</div>
+			</div>
+		
+		
+		
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>Generate</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Nationality</th>
+					<th>Gender</th>
+					<th>Place of birth</th>
+					<th>Address</th>
+					<th>CNP</th>
+					<th>Serial</th>
+					<th>Number</th>
+					<th>Valid From</th>
+					<th>Valid To</th>
+					<th>Action</th>
+					<th>Upload Signed</th>
+					<th>Download Signed</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="tempClient : ${clients}">
+
+					<td><a
+						th:href="@{'/clients/download?fileName=' + ${tempClient.cnp}+'.pdf'}">Download</a>
+					</td>
+					<td th:text="${tempClient.firstName}" />
+					<td th:text="${tempClient.lastName}" />
+					<td th:text="${tempClient.nationality}" />
+					<td th:text="${tempClient.gender}" />
+					<td th:text="${tempClient.placeofbirth}" />
+					<td th:text="${tempClient.address}" />					
+					<td th:text="${tempClient.cnp}" />
+					<td th:text="${tempClient.serial}" />
+					<td th:text="${tempClient.nr}" />
+					<td th:text="${#dates.format(tempClient.validFrom, 'dd-MM-yyyy')}" />
+					<td th:text="${#dates.format(tempClient.validTo, 'dd-MM-yyyy')}" />
+
+					<td>
+						<div class="row">
+
+							<div class="col-6">
+								<!-- Add "delete" button/link -->
+								<form action="#" th:action="@{/clients/delete}" method="POST">
+									<input type="hidden" name="clientId"
+										th:value="${tempClient.id}" />
+									<button type="submit" class="btn btn-danger btn-sm"
+										onclick="if (!(confirm('Are you sure you want to delete this client?'))) return false">
+										Delete</button>
+								</form>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="row">
+
+							<div class="col">
+								<!-- Add "upload" button/link -->
+								<form action="#" th:action="@{/clients/upload}" method="POST" enctype="multipart/form-data" >
+									<div class="input-group">
+										<input type="hidden" name="clientId" th:value="${tempClient.id}" />
+									    <input type="file" th:id="file+${tempClient.id}" name="file" class="form-control-file" accept="application/pdf" >
+										<button type="submit" th:id="button+${tempClient.id}" class="btn btn-dark btn-sm ml-3 mr-1"  th:onclick="|return ValidateExtension(${tempClient.id})|">Upload</button>
+										<span th:id="error+${tempClient.id}" style="color: red;"></span>
+									</div>
+								</form>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="row">
+
+							<div class="col-6">
+								<div th:if="${tempClient.document} != null">
+									<p style="text-align: center;">
+										<a th:href="@{'/clients/' + ${tempClient.cnp}+'/download'}">Download</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+<script>
+function ValidateExtension(id) {
+    var fileUpload = document.getElementById("file"+id);
+    var lblError = document.getElementById("error"+id);
+    var regex = new RegExp("(^[0-9]{13})\.pdf$");
+    var filename = fileUpload.value.replace(/^.*[\\\/]/, '')
+    if (!regex.test(filename.toLowerCase())) {
+        lblError.innerHTML = "Please upload files in format: <b> xxxxxxxxxxxxx.pdf </b> only.";
+        return false;
+    }
+    lblError.innerHTML = "";
+    return true;
+}
+
+</script>
+</body>
+
+</html>
+
+
+

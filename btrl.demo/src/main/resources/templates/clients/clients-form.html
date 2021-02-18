@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.error {
+	color: red
+}
+</style>
+<title>Save Clients</title>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h3>Clients Directory</h3>
+		<hr>
+
+		<p class="h4 mb-4">Save Client</p>
+
+
+		
+
+		<form action="#" th:action="@{/clients/processRegistrationForm}"
+			th:object="${client}" method="POST">
+
+			<!-- Place for messages: error, alert etc ... -->
+			<div class="form-group">
+				<div class="col-xs-15">
+					<div>
+
+						<!-- Check for registration error -->
+						<div th:if="${registrationError}" th:utext="${registrationError}"
+							class="alert alert-danger col-xs-offset-1 col-xs-10"></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Add hidden form field to handle update -->
+			<input type="hidden" th:field="*{id}" /> <input type="text"
+				th:field="*{firstName}" class="form-control mb-4 col-4"
+				placeholder="First name">
+			<div th:if="${#fields.hasErrors('firstName')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('firstName')}"
+						th:text="'First name ' + ${err}" />
+				</ul>
+			</div>
+			<input type="text" th:field="*{lastName}"
+				class="form-control mb-4 col-4" placeholder="Last name">
+
+			<div th:if="${#fields.hasErrors('lastName')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('lastName')}"
+						th:text="'Last name ' + ${err}" />
+				</ul>
+			</div>
+			
+			<input type="text" th:field="*{nationality}"
+				class="form-control mb-4 col-4" placeholder="Nationality">
+
+			<div th:if="${#fields.hasErrors('nationality')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('nationality')}"
+						th:text="'Nationality ' + ${err}" />
+				</ul>
+			</div>
+
+			 <div class="form-group">
+	            <div class="custom-control custom-radio custom-control-inline">
+    	            <input type="radio" id="option1" name="option1" class="custom-control-input" value="F" th:field="*{gender}">
+        	        <label class="custom-control-label" for="option1">Male</label>
+            	</div>
+            	<div class="custom-control custom-radio custom-control-inline">
+                	<input type="radio" id="option2" name="option2" class="custom-control-input" value="M" th:field="*{gender}">
+                	<label class="custom-control-label" for="option2">Female</label>
+            	</div>
+        	</div>
+			<div th:if="${#fields.hasErrors('gender')}" style="margin-bottom: 25px"
+				class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('gender')}" th:text=${err} />
+				</ul>
+			</div>
+						
+			<input type="text" th:field="*{placeofbirth}" class="form-control mb-4 col-4"
+				placeholder="Place of birth">
+			<div th:if="${#fields.hasErrors('placeofbirth')}" style="margin-bottom: 25px"
+				class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('placeofbirth')}" th:text=${err} />
+				</ul>
+			</div>
+									
+			<input type="text" th:field="*{address}" class="form-control mb-4 col-4"
+				placeholder="Address">
+			<div th:if="${#fields.hasErrors('address')}" style="margin-bottom: 25px"
+				class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('address')}" th:text=${err} />
+				</ul>
+			</div>
+			
+			<input type="text" th:field="*{cnp}" class="form-control mb-4 col-4"
+				placeholder="CNP">
+			<div th:if="${#fields.hasErrors('cnp')}" style="margin-bottom: 25px"
+				class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('cnp')}" th:text=${err} />
+				</ul>
+			</div>
+			
+	
+			<input type="text" th:field="*{serial}"
+				class="form-control mb-4 col-4" placeholder="SERIAL">
+			<div th:if="${#fields.hasErrors('serial')}"
+				style="margin-bottom: 25px" class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('serial')}" th:text=${err} />
+				</ul>
+			</div>
+
+			<input type="text" th:field="*{nr}" class="form-control mb-4 col-4"
+				placeholder="NR">
+			<div th:if="${#fields.hasErrors('nr')}" style="margin-bottom: 25px"
+				class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('nr')}" th:text=${err} />
+				</ul>
+			</div>
+
+			<input type="date" th:field="*{validFrom}"
+				class="form-control mb-4 col-4" placeholder="Valid From"> 
+			<div th:if="${#fields.hasErrors('validFrom')}" style="margin-bottom: 25px"
+				class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('validFrom')}" th:text=${err} />
+				</ul>
+			</div>
+				
+			<input
+				type="date" th:field="*{validTo}" class="form-control mb-4 col-4"
+				placeholder="Valid To">
+			<div th:if="${#fields.hasErrors('validTo')}" style="margin-bottom: 25px"
+				class="text-danger">
+				<ul>
+					<li th:each="err : ${#fields.errors('validTo')}" th:text=${err} />
+				</ul>
+			</div>
+			
+			<button type="submit" class="btn btn-info col-2">Save</button>
+
+		</form>
+
+		<hr>
+		<a th:href="@{/clients/list}">Back to clients List</a>
+
+	</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
